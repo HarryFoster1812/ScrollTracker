@@ -4,6 +4,7 @@ import android.view.WindowManager;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.util.Log;
 import android.content.Intent;
 
@@ -16,16 +17,42 @@ public class ScrollAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event){
-        if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_SCROLLED){
-            Log.d("ScrollService", "Scroll Detected Y:" + event.getScrollDeltaY() + " X:"+ event.getScrollDeltaX());
-            distance += (Math.abs(event.getScrollDeltaY())/DPI)*2.54;
-            distance += (Math.abs(event.getScrollDeltaX())/DPI)*2.54;
+        int eventType = event.getEventType();
+        Log.d("ScrolAccessibilitylEvent", AccessibilityEvent.eventTypeToString(eventType));
 
-            Intent intent = new Intent("com.example.scrolltracker.DISTANCE_UPDATED");
-            intent.putExtra("distance", distance);
-            sendBroadcast(intent);
-            Log.d("ScrollService", "Broadcast sent!");
+        switch (eventType){
+            case AccessibilityEvent.TYPE_VIEW_SCROLLED:
 
+                Log.d("ScrollService", "Scroll Detected Y:" + event.getScrollDeltaY() + " X:"+ event.getScrollDeltaX());
+                distance += (Math.abs(event.getScrollDeltaY())/DPI)*2.54;
+                distance += (Math.abs(event.getScrollDeltaX())/DPI)*2.54;
+
+                Intent intent = new Intent("com.example.scrolltracker.DISTANCE_UPDATED");
+                intent.putExtra("distance", distance);
+                sendBroadcast(intent);
+                Log.d("ScrollService", "Broadcast sent!");
+
+                break;
+
+            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
+                // do something
+                AccessibilityNodeInfo source = getRootInActiveWindow();
+                AccessibilityNodeInfo eventsource = event.getSource();
+                int eventAction = event.getAction();
+                float DeltaY = event.getScrollDeltaY();
+                float DeltaX = event.getScrollDeltaX();
+                if (source != null) {
+                    // Try to check the scroll position using AccessibilityNodeInfo
+                    // This requires traversing the accessibility tree or querying the scroll properties of the node
+                    Log.d("ScrollService", "Root is not not null.");
+                }
+                Log.d("WINDOWCONTENTCHANGED", "DeltaY:" + DeltaY + ", DeltaX:" + DeltaX);
+                if (DeltaX != -1 || DeltaY !=-1){
+                    float deltaX = event.getScrollDeltaX();
+                    float deltaY = event.getScrollDeltaY();
+                    int i =0;
+                }
+                break;
         }
     }
 
