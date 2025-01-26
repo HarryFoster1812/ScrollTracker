@@ -27,9 +27,9 @@ public class ScrollAccessibilityService extends AccessibilityService {
             case AccessibilityEvent.TYPE_VIEW_SCROLLED:
 
                 Log.d("ScrollService", "Scroll Detected Y:" + event.getScrollDeltaY() + " X:"+ event.getScrollDeltaX());
-                float distance = 0;
-                distance += (Math.abs(event.getScrollDeltaY())/DPI)*2.54;
-                distance += (Math.abs(event.getScrollDeltaX())/DPI)*2.54;
+                double distance = 0;
+                distance += (Math.abs((double)event.getScrollDeltaY())/(double)DPI)*2.54;
+                distance += (Math.abs((double)event.getScrollDeltaX())/(double)DPI)*2.54;
 
                 Intent intent = new Intent("com.example.scrolltracker.DISTANCE_UPDATED");
                 intent.putExtra("distance", distance);

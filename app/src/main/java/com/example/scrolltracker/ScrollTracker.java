@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 public class ScrollTracker {
     @JsonProperty("dataMap")
-    private static Map<LocalDate, ScrollData> scrollData;
+    private static Map<String, ScrollData> scrollData;
     private Context context;
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final String fileName = "scroll_data.json";
@@ -31,14 +31,14 @@ public class ScrollTracker {
         }
         else{
             scrollData = new HashMap<>();
-            scrollData.put(LocalDate.now(), new ScrollData());
+            scrollData.put(LocalDate.now().toString(), new ScrollData());
             writeScrollDataToFile();
         }
     }
 
     // Load ScrollData from JSON file
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private Map<LocalDate, ScrollData> loadScrollDataFromFile(){
+    private Map<String, ScrollData> loadScrollDataFromFile(){
         try {
             // Set up a custom date format for Jackson
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,9 +70,9 @@ public class ScrollTracker {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void addDistance(String packageName, float distance){
+    public void addDistance(String packageName, double distance){
         // try and get the scroll data
-        ScrollData result = scrollData.get(LocalDate.now());
+        ScrollData result = scrollData.get(LocalDate.now().toString());
 
         if (result != null){
             result.addDistance(packageName, distance);
@@ -81,13 +81,13 @@ public class ScrollTracker {
         else{
             result = new ScrollData();
             result.addDistance(packageName, distance);
-            scrollData.put(LocalDate.now(), result);
+            scrollData.put(LocalDate.now().toString(), result);
         }
         writeScrollDataToFile();
 
     }
 
-    public float getTotalDistance(LocalDate date){
+    public double getTotalDistance(LocalDate date){
         ScrollData result = scrollData.get(date.toString());
         return result.calculateTotal();
     }

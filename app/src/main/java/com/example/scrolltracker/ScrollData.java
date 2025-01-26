@@ -7,33 +7,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ScrollData {
     @JsonProperty("distanceMap")
-    private Map<String, Float> distanceMap;
+    private Map<String, Double> distanceMap;
 
     public ScrollData() {
         this.distanceMap = new HashMap<>();
     }
 
-    public void addDistance(String packageName, float distance) {
+    public void addDistance(String packageName, double distance) {
         if (!containsPackage(packageName)) {
             distanceMap.put(packageName, distance);
         }
         else{
-            float currentDistance = distanceMap.get(packageName);
-            distanceMap.put(packageName, currentDistance + distance);
+            double currentDistance = distanceMap.get(packageName);
+            double new_distance = currentDistance + distance;
+            distanceMap.put(packageName, new_distance);
         }
     }
 
-    public float getDistance(String packageName) {
-        return distanceMap.getOrDefault(packageName, 0f);
+    public double getDistance(String packageName) {
+        return distanceMap.getOrDefault(packageName, Double.MIN_VALUE);
     }
 
     public boolean containsPackage(String packageName) {
         return distanceMap.containsKey(packageName);
     }
 
-    public float calculateTotal(){
-        float total = 0;
-        for (Map.Entry<String, Float> entry : distanceMap.entrySet()) {
+    public double calculateTotal(){
+        double total = 0;
+        for (Map.Entry<String, Double> entry : distanceMap.entrySet()) {
             total += entry.getValue();
         }
         return total;
