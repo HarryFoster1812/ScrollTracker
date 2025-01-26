@@ -1,5 +1,6 @@
 package com.example.scrolltracker;
 import android.accessibilityservice.AccessibilityService;
+import android.os.Build;
 import android.view.WindowManager;
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -8,13 +9,15 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.util.Log;
 import android.content.Intent;
 
+import androidx.annotation.RequiresApi;
+
 public class ScrollAccessibilityService extends AccessibilityService {
 
     int ResolutionHeight;
     int ResolutionWidth;
     int DPI;
-    float distance;
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event){
         int eventType = event.getEventType();
@@ -24,11 +27,13 @@ public class ScrollAccessibilityService extends AccessibilityService {
             case AccessibilityEvent.TYPE_VIEW_SCROLLED:
 
                 Log.d("ScrollService", "Scroll Detected Y:" + event.getScrollDeltaY() + " X:"+ event.getScrollDeltaX());
+                float distance = 0;
                 distance += (Math.abs(event.getScrollDeltaY())/DPI)*2.54;
                 distance += (Math.abs(event.getScrollDeltaX())/DPI)*2.54;
 
                 Intent intent = new Intent("com.example.scrolltracker.DISTANCE_UPDATED");
                 intent.putExtra("distance", distance);
+                intent.putExtra("package", event.getPackageName());
                 sendBroadcast(intent);
                 Log.d("ScrollService", "Broadcast sent!");
 
