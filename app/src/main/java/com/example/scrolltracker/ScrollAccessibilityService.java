@@ -55,7 +55,6 @@ public class ScrollAccessibilityService extends AccessibilityService {
                 if (DeltaX != -1 || DeltaY !=-1){
                     float deltaX = event.getScrollDeltaX();
                     float deltaY = event.getScrollDeltaY();
-                    int i =0;
                 }
                 break;
         }

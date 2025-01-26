@@ -14,11 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
 
     private TextView distanceTextView;
-    String PACKAGE_NAME = getApplicationContext().getPackageName();
-
+    String PACKAGE_NAME;
+    ScrollTracker tracker;
 
 
     // Receiver for receiving distance updates from ScrollAccessibilityService
@@ -29,23 +30,16 @@ public class MainActivity extends AppCompatActivity {
             if (intent != null && "com.example.scrolltracker.DISTANCE_UPDATED".equals(intent.getAction())) {
                 float distance = intent.getFloatExtra("distance", 0f);
                 String action_package_name = intent.getStringExtra("package");
+
                 // Update the UI with the new distance
                 if (Objects.equals(action_package_name, PACKAGE_NAME)) {
                     updateUIDistance(distance);
                 }
-
-                else {
-                    saveDistance(action_package_name, distance);
-                }
-
+                
+                tracker.addDistance(action_package_name, distance);
             }
         }
     };
-
-
-    private void saveDistance(String packageName, float distance){
-
-    }
 
     // Method to update the TextView with the new distance value
     private void updateUIDistance(float distance) {
@@ -65,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize the TextView for displaying distance
         distanceTextView = findViewById(R.id.distanceTextView);
+
+        // Initialise Package Name
+        PACKAGE_NAME = getApplicationContext().getPackageName();
+
+        // Initialise ScrollTracker
+
+        tracker = new ScrollTracker(this.getApplicationContext());
 
         // Register the receiver dynamically to listen for the distance updates
         IntentFilter filter = new IntentFilter("com.example.scrolltracker.DISTANCE_UPDATED");

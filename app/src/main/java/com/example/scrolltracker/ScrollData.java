@@ -1,11 +1,12 @@
 package com.example.scrolltracker;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class ScrollData {
+    @JsonProperty("distanceMap")
     private Map<String, Float> distanceMap;
 
     public ScrollData() {
