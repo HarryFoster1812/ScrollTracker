@@ -40,7 +40,6 @@ public class ScrollAccessibilityService extends AccessibilityService {
                 break;
 
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
-                // do something
                 AccessibilityNodeInfo source = getRootInActiveWindow();
                 AccessibilityNodeInfo eventsource = event.getSource();
                 int eventAction = event.getAction();
