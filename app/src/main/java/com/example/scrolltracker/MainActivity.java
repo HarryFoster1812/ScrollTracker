@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -20,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView distanceTextView;
     String PACKAGE_NAME;
     ScrollTracker tracker;
-
 
     // Receiver for receiving distance updates from ScrollAccessibilityService
     private final BroadcastReceiver distanceReceiver = new BroadcastReceiver() {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Objects.equals(action_package_name, PACKAGE_NAME)) {
                     updateUIDistance(distance);
                 }
-                
+
                 tracker.addDistance(action_package_name, distance);
             }
         }
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize the TextView for displaying distance
-        distanceTextView = findViewById(R.id.distanceTextView);
+        distanceTextView = findViewById(R.id.tvScrollValue);
 
         // Initialise Package Name
         PACKAGE_NAME = getApplicationContext().getPackageName();
@@ -74,9 +74,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // Register the receiver dynamically to listen for the distance updates
+        if (tracker != null) {
+            distanceTextView.setText(String.format("%.2f cm", tracker.getTotalDistance(LocalDate.now())));
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         // Unregister the receiver to avoid memory leaks
         unregisterReceiver(distanceReceiver);
     }
 }
+
+
+/*
+NOTES:
+
+Length visualisation:
+Car length: 4.7m
+Tennis court: (~23.77 meters long)
+Olympic Swimming Pool: 50m
+American Football Field: 91.44 m
+Football Field: 105m
+
+ */
