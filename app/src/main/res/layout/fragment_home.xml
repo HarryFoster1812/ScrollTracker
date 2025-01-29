@@ -1,92 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"> <!-- Ensures the content is scrollable -->
 
-    <!-- Header -->
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
+    <!-- Using LinearLayout for the scrollable content -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Understand your scrolling habits"
-        android:textSize="26sp"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Today you have scrolled:"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif"
-        android:textColor="#B0BEC5"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Scroll Value Card -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardScrollValue"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="#1E1E1E"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
+        <!-- Header -->
         <TextView
-            android:id="@+id/tvScrollValue"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="10,245 cm"
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Understand Your Scrolling Habits"
             android:textSize="28sp"
             android:fontFamily="sans-serif-medium"
-            android:textColor="#00E5FF" />
-    </androidx.cardview.widget.CardView>
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_marginTop="40dp" />
 
-    <!-- Buttons -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnStartTracking"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Start Tracking"
-        android:backgroundTint="#00E5FF"
-        android:textColor="#121212"
-        android:textSize="16sp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/cardScrollValue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp" />
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today, you've scrolled a grand total of:"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#B0BEC5"
+            android:layout_marginTop="12dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnViewInsights"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="View Insights"
-        android:backgroundTint="#FF6E40"
-        android:textColor="#121212"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/btnStartTracking"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp" />
+        <!-- Scroll Value Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardScrollValue"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="#1E1E1E">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvScrollValue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="10,245 cm"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#00E5FF" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Example Button for Future Action -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVisualComparison"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show Visual Comparisons"
+            android:backgroundTint="#FF5722"
+            android:textColor="#121212"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollEquivalents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <!-- Equivalent Text -->
+            <TextView
+                android:id="@+id/tvEquiv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="That's the equivalent of..."
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Scroll Equivalents Text -->
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/WalkingTime"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="40dp"
+                app:cardBackgroundColor="#1E1E1E"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tvEquiv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/tvWalkingTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equivalents will be shown here"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#B0BEC5"
+                    android:layout_marginTop="24dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Example Scrollable Distance Bar or Visual -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CarLength"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="40dp"
+                app:cardBackgroundColor="#1E1E1E"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tvEquiv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/tvCarLength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equivalents will be shown here"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#B0BEC5"
+                    android:layout_marginTop="24dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/TennisCourt"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="40dp"
+                app:cardBackgroundColor="#1E1E1E"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tvEquiv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/tvTennisCourt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equivalents will be shown here"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#B0BEC5"
+                    android:layout_marginTop="24dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/SwimmingPool"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="40dp"
+                app:cardBackgroundColor="#1E1E1E"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tvEquiv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/tvSwimmingPool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equivalents will be shown here"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#B0BEC5"
+                    android:layout_marginTop="24dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

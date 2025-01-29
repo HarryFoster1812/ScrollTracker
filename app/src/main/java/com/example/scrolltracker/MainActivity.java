@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             int id = item.getItemId();
 
             if (id == R.id.nav_home) {
-                selected_fragment = new HomeFragment(tracker);
+                selected_fragment = homeFragment;
                 tag = "HOME_FRAGMENT";
             } else if (id == R.id.nav_analytics) {
                 selected_fragment = new AnalyticsFragment();
@@ -179,5 +179,8 @@ Tennis court: (~23.77 meters long)
 Olympic Swimming Pool: 50m
 American Football Field: 91.44 m
 Football Field: 105m
+
+Time visualisation:
+How long to walk the distance
 
  */
