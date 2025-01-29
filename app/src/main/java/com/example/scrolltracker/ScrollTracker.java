@@ -89,6 +89,11 @@ public class ScrollTracker {
 
     public double getTotalDistance(LocalDate date){
         ScrollData result = scrollData.get(date.toString());
+
+        if (result == null){
+            return 0;
+        }
+
         return result.calculateTotal();
     }
 
