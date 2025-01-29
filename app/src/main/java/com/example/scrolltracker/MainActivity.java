@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     String PACKAGE_NAME;
     ScrollTracker tracker;
+    HomeFragment homeFragment;
 
     // Receiver for receiving distance updates from ScrollAccessibilityService
     private final BroadcastReceiver distanceReceiver = new BroadcastReceiver() {
@@ -70,10 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         tracker = new ScrollTracker(this.getApplicationContext());
 
-        if (savedInstanceState == null) {
-            loadFragment(new HomeFragment(tracker), "HOME_FRAGMENT");
-        }
-
+        homeFragment = new HomeFragment(tracker);
+        loadFragment(homeFragment, "HOME_FRAGMENT");
         BottomNavigationView bottom_nav = findViewById(R.id.bottomNavigation);
         bottom_nav.setOnItemSelectedListener(item -> {
             Fragment selected_fragment = null;
@@ -124,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateHomeFragmentUI(double distance){
-        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("HOME_FRAGMENT");
         if (homeFragment != null) {
             homeFragment.updateUIDistance(distance);
         }

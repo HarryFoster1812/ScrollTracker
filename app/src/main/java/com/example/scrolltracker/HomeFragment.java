@@ -1,5 +1,6 @@
 package com.example.scrolltracker;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class HomeFragment extends Fragment {
         this.tracker = tracker;
     }
 
+    @SuppressLint("NewApi")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -31,7 +33,10 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         distanceTextView = view.findViewById(R.id.tvScrollValue);
-
+        if (tracker != null) {
+            double distance = tracker.getTotalDistance(LocalDate.now());
+            updateUIDistance(distance);
+        }
         return view;
     }
 
@@ -39,7 +44,8 @@ public class HomeFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateUIDistance(double distance) {
         // Update the TextView with the new distance value
-        distanceTextView.setText(String.format("%.2f cm", (float)tracker.getTotalDistance(LocalDate.now())));
-
+        if (distanceTextView != null) {
+            distanceTextView.setText(String.format("%.2f cm", (float) tracker.getTotalDistance(LocalDate.now())));
+        }
     }
 }
