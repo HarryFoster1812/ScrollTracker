@@ -40,8 +40,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2") // or any latest version
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
-    implementation("androidx.fragment:fragment:1.8.5")
+    implementation(libs.jackson.databind) // or any latest version
+    implementation(libs.jackson.annotations)
+    implementation(libs.jackson.core)
+    implementation(libs.fragment)
+
+    // For Charts
+    //implementation("com.github.PhilJay:MPAndroidChart:v3.1.0'")
+
+    // ViewPager2 for carousel
+    implementation(libs.viewpager2)
+
+    // RecyclerView for app list
+    //implementation(libs.recyclerview)
 }

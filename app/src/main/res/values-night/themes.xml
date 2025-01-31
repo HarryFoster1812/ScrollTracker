@@ -1,7 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.ScrollTracker" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.ScrollTracker" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary Colors -->
+        <item name="colorPrimary">#BB86FC</item>
+        <item name="colorPrimaryVariant">#3700B3</item>
+        <item name="colorOnPrimary">#000000</item>
+
+        <!-- Background Colors -->
+        <item name="android:colorBackground">#121212</item>
+        <item name="colorOnBackground">#FFFFFF</item>
+
+        <!-- UI Controls -->
+        <item name="colorSurface">#1E1E1E</item>
+        <item name="colorOnSurface">#FFFFFF</item>
     </style>
 </resources>

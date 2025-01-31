@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -60,7 +61,19 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("AppSettings", MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "light");
+
+        switch (theme) {
+            case "light": setTheme(R.style.Theme_Light); break;
+            case "dark": setTheme(R.style.Theme_Dark); break;
+            case "blue": setTheme(R.style.Theme_Blue); break;
+            case "green": setTheme(R.style.Theme_Green); break;
+        }
+
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
 
@@ -125,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
     private void updateHomeFragmentUI(double distance){
         if (homeFragment != null) {
             homeFragment.updateUIDistance(distance);
+            homeFragment.updateVisualComparisons();
+
         }
     }
 

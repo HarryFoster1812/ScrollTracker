@@ -1,11 +1,17 @@
 package com.example.scrolltracker;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Button;
@@ -14,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.time.LocalDate;
 
@@ -42,17 +50,21 @@ public class HomeFragment extends Fragment {
         distanceTextView = view.findViewById(R.id.tvScrollValue);
         if (tracker != null) {
             double distance = tracker.getTotalDistance(LocalDate.now());
-            updateUIDistance(distance);
+            //updateUIDistance(distance);
+            animateDistanceUpdate(distance);
         }
 
         Button visualComparison = view.findViewById(R.id.btnVisualComparison);
         visualComparison.setOnClickListener(v -> {
-            ConstraintLayout layout = view.findViewById(R.id.scrollEquivalents);
+            LinearLayout layout = view.findViewById(R.id.scrollEquivalents);
             if(visualComparison.getText().equals("Show Visual Comparisons")){
-                layout.setVisibility(View.VISIBLE);
+                fadeIn(layout);
                 visualComparison.setText("Hide Visual Comparisons");
+                updateVisualComparisons();
+
             } else {
                 layout.setVisibility(View.GONE);
+                fadeOut(layout);
                 visualComparison.setText("Show Visual Comparisons");
             }
         });
@@ -60,8 +72,10 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void updateVisualComparisons(double distance) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void updateVisualComparisons() {
         // Calculate the visual comparisons based on the distance
+        double distance = tracker.getTotalDistance(LocalDate.now());
         double distanceMeters = distance / 100;
         double carLength = distanceMeters / CAR_LENGTH_METERS;
         double tennisLength = distanceMeters / TENNIS_LENGTH_METERS;
@@ -82,11 +96,24 @@ public class HomeFragment extends Fragment {
             walkingTimeMinutes = walkingTimeMinutes - (walkingTimeHours * 60);
             time_string = String.format("%d hours and %d minutes", (int)Math.floor(walkingTimeHours), (int)Math.floor(walkingTimeMinutes));
 
-
         }
 
         // Set all of the text views to the new comparisons
+        MaterialCardView cardCarLength = getView().findViewById(R.id.cardCarLength);
+        TextView tvCarLength = cardCarLength.findViewById(R.id.tvEquivalentText);
+        tvCarLength.setText(carLength + " Car Lengths");
 
+        MaterialCardView cardTennis = getView().findViewById(R.id.cardTennisCourt);
+        TextView tvTennis = cardTennis.findViewById(R.id.tvEquivalentText);
+        tvTennis.setText(tennisLength + " Tennis Courts");
+
+        MaterialCardView cardSwimming = getView().findViewById(R.id.cardSwimmingPool);
+        TextView tvSwimming = cardSwimming.findViewById(R.id.tvEquivalentText);
+        tvSwimming.setText(olympicSwimmingPoolLength + " Olympic Swimming Pools");
+
+        MaterialCardView cardWalking = getView().findViewById(R.id.cardWalkingTime);
+        TextView tvWalking = cardWalking.findViewById(R.id.tvEquivalentText);
+        tvWalking.setText("The distance covered when walking for " + time_string);
 
     }
 
@@ -95,7 +122,44 @@ public class HomeFragment extends Fragment {
     public void updateUIDistance(double distance) {
         // Update the TextView with the new distance value
         if (distanceTextView != null) {
-            distanceTextView.setText(String.format("%.2f cm", (float) tracker.getTotalDistance(LocalDate.now())));
+            double TotalDistance = tracker.getTotalDistance(LocalDate.now());
+            distanceTextView.setText(String.format("%.2f cm", (float) TotalDistance));
+
         }
+
+        else{
+            distanceTextView.setText(String.format("%.2f cm", (float)distance));
+
+        }
+
     }
+
+    private void fadeIn(View view) {
+        view.setVisibility(View.VISIBLE);
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setDuration(400);
+        view.startAnimation(fadeIn);
+    }
+
+    private void fadeOut(View view) {
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setDuration(300);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override public void onAnimationEnd(Animation animation) { view.setVisibility(View.GONE); }
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationStart(Animation animation) {}
+        });
+        view.startAnimation(fadeOut);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void animateDistanceUpdate(double newDistance) {
+        ValueAnimator animator = ValueAnimator.ofFloat(0, (float) newDistance);
+        animator.setDuration(1000);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.addUpdateListener(animation ->
+                distanceTextView.setText(String.format("%.2f cm", (float) animation.getAnimatedValue())));
+        animator.start();
+    }
+
 }
