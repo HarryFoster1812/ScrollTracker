@@ -1,5 +1,8 @@
 package com.example.scrolltracker;
 import android.accessibilityservice.AccessibilityService;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.os.Build;
 import android.view.WindowManager;
 import android.content.Context;
@@ -61,7 +64,7 @@ public class ScrollAccessibilityService extends AccessibilityService {
 
     @Override
     public void onInterrupt(){
-        // do something
+        stopForeground(true);
     }
 
     @Override
@@ -75,5 +78,46 @@ public class ScrollAccessibilityService extends AccessibilityService {
         ResolutionWidth = displayMetrics.widthPixels;
         ResolutionHeight = displayMetrics.heightPixels;
         DPI = displayMetrics.densityDpi;
+
+        startForegroundNotification();
     }
+
+    private void startForegroundNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "scroll_tracker_channel";
+            String channelName = "Scroll Tracker Service";
+
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    channelName,
+                    NotificationManager.IMPORTANCE_LOW
+            );
+            channel.setDescription("Keeps Scroll Tracker running");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
+
+            Notification notification = new Notification.Builder(this, channelId)
+                    .setContentTitle("Scroll Tracker Active")
+                    .setContentText("Tracking scroll distance")
+                    .setSmallIcon(R.drawable.ic_scroll) // Use your icon here
+                    .setOngoing(true) // Makes it non-dismissible
+                    .build();
+
+            startForeground(1, notification); // Start foreground with notification ID 1
+        } else {
+            // For older Android versions
+            Notification notification = new Notification.Builder(this)
+                    .setContentTitle("Scroll Tracker Active")
+                    .setContentText("Tracking scroll distance")
+                    .setSmallIcon(R.drawable.ic_scroll)
+                    .setOngoing(true)
+                    .build();
+
+            startForeground(1, notification);
+        }
+    }
+
 }

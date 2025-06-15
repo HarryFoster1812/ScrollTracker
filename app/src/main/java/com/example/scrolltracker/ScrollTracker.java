@@ -1,7 +1,11 @@
 package com.example.scrolltracker;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.content.Context;
+import android.util.Log;
+
 import androidx.annotation.RequiresApi;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -97,4 +101,21 @@ public class ScrollTracker {
         return result.calculateTotal();
     }
 
+    public String getAppNameFromPackage(String packageName) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+            return (String) packageManager.getApplicationLabel(applicationInfo);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return packageName; // Fallback to package name if not found
+        }
+    }
+
+
+    public void logScrollData(){
+        for (Map.Entry<String, ScrollData> entry : scrollData.entrySet()) {
+            Log.d("SCROLLDATA: " + entry.getKey(), "logScrollData: " + entry.getValue().toString());
+        }
+    }
 }

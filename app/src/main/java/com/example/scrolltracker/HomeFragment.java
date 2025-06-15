@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +35,11 @@ public class HomeFragment extends Fragment {
     private static final double CAR_LENGTH_METERS = 4.7;
     private static final double TENNIS_LENGTH_METERS = 23.77;
     private static final double OLYMPIC_SWIMMING_POOL_LENGTH_METERS = 50;
+
+    private MaterialCardView cardCarLength;
+    private MaterialCardView cardTennis;
+    private MaterialCardView cardSwimming;
+    private MaterialCardView cardWalking;
 
     public HomeFragment(ScrollTracker tracker) {
         this.tracker = tracker;
@@ -69,7 +75,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        cardCarLength = view.findViewById(R.id.cardCarLength);
+        cardTennis = view.findViewById(R.id.cardTennisCourt);
+        cardSwimming = view.findViewById(R.id.cardSwimmingPool);
+        cardWalking = view.findViewById(R.id.cardWalkingTime);
+
+        setIcons();
+
         return view;
+    }
+
+    public void setIcons(){
+        ((ImageView)cardWalking.findViewById(R.id.iconEquivalent)).setImageResource(R.drawable.ic_walk);
+        ((ImageView)cardCarLength.findViewById(R.id.iconEquivalent)).setImageResource(R.drawable.ic_car);
+        ((ImageView)cardSwimming.findViewById(R.id.iconEquivalent)).setImageResource(R.drawable.ic_swimming);
+        ((ImageView)cardTennis.findViewById(R.id.iconEquivalent)).setImageResource(R.drawable.ic_tennis);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -99,19 +120,16 @@ public class HomeFragment extends Fragment {
         }
 
         // Set all of the text views to the new comparisons
-        MaterialCardView cardCarLength = getView().findViewById(R.id.cardCarLength);
+
         TextView tvCarLength = cardCarLength.findViewById(R.id.tvEquivalentText);
         tvCarLength.setText(carLength + " Car Lengths");
 
-        MaterialCardView cardTennis = getView().findViewById(R.id.cardTennisCourt);
         TextView tvTennis = cardTennis.findViewById(R.id.tvEquivalentText);
         tvTennis.setText(tennisLength + " Tennis Courts");
 
-        MaterialCardView cardSwimming = getView().findViewById(R.id.cardSwimmingPool);
         TextView tvSwimming = cardSwimming.findViewById(R.id.tvEquivalentText);
         tvSwimming.setText(olympicSwimmingPoolLength + " Olympic Swimming Pools");
 
-        MaterialCardView cardWalking = getView().findViewById(R.id.cardWalkingTime);
         TextView tvWalking = cardWalking.findViewById(R.id.tvEquivalentText);
         tvWalking.setText("The distance covered when walking for " + time_string);
 

@@ -111,25 +111,25 @@
             <include layout="@layout/item_equivalent_card"
                 android:id="@+id/cardWalkingTime"
                 android:tag="Walking Time"
-                android:drawableLeft="@drawable/ic_walk"
+
                 android:text="Walking x minutes" />
 
             <include layout="@layout/item_equivalent_card"
                 android:id="@+id/cardCarLength"
                 android:tag="Car Length"
-                android:drawableLeft="@drawable/ic_car"
+
                 android:text="x Car Lengths" />
 
             <include layout="@layout/item_equivalent_card"
                 android:id="@+id/cardTennisCourt"
                 android:tag="Tennis Court"
-                android:src="@drawable/ic_tennis"
+
                 android:text="x Tennis Courts" />
 
             <include layout="@layout/item_equivalent_card"
                 android:id="@+id/cardSwimmingPool"
                 android:tag="Swimming Pool"
-                android:drawableLeft="@drawable/ic_swimming"
+
                 android:text="x Olympic Swimming Pools" />
         </LinearLayout>
 

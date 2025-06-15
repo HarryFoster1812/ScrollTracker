@@ -23,12 +23,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class SettingsFragment extends Fragment {
 
     private SharedPreferences sharedPreferences;
     private Switch switchNotifications;
+    private MaterialCardView themeView;
 
     @Nullable
     @Override
@@ -37,6 +39,15 @@ public class SettingsFragment extends Fragment {
 
         // Get SharedPreferences
         sharedPreferences = requireActivity().getSharedPreferences("AppSettings", getContext().MODE_PRIVATE);
+
+        // handle theme
+        themeView = view.findViewById(R.id.themeSelect);
+        themeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openThemeDialog(view);
+            }
+        });
 
         // Handle Notifications Toggle
         switchNotifications = view.findViewById(R.id.switchNotifications);
@@ -81,7 +92,6 @@ public class SettingsFragment extends Fragment {
 
     private void setTheme(String theme) {
         sharedPreferences.edit().putString("theme", theme).apply();
-        requireActivity().recreate(); // Restart activity to apply theme
     }
 
 

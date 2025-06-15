@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     String PACKAGE_NAME;
     ScrollTracker tracker;
     HomeFragment homeFragment;
+    Fragment currentFragment;
 
     // Receiver for receiving distance updates from ScrollAccessibilityService
     private final BroadcastReceiver distanceReceiver = new BroadcastReceiver() {
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 selected_fragment = homeFragment;
                 tag = "HOME_FRAGMENT";
             } else if (id == R.id.nav_analytics) {
-                selected_fragment = new AnalyticsFragment();
+                selected_fragment = new AnalyticsFragment(this.tracker);
                 tag = "ANALYTICS_FRAGMENT";
 
             } else if (id == R.id.nav_settings) {
@@ -136,10 +137,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateHomeFragmentUI(double distance){
-        if (homeFragment != null) {
+        if (homeFragment != null && currentFragment == homeFragment) {
             homeFragment.updateUIDistance(distance);
             homeFragment.updateVisualComparisons();
-
         }
     }
 
@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container_view, fragment);
         transaction.commit();
+        currentFragment = fragment;
     }
 
     @Override

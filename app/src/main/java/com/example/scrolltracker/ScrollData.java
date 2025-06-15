@@ -1,5 +1,9 @@
 package com.example.scrolltracker;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,5 +42,12 @@ public class ScrollData {
             total += entry.getValue();
         }
         return total;
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<String, Double> entry : distanceMap.entrySet())
+        sb.append("Package: " +entry.getKey() + "\tDistance" + entry.getValue() + "\n");
+        return sb.toString();
     }
 }
