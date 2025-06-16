@@ -17,7 +17,7 @@
 
         <!-- Accessibility Service -->
         <service
-            android:name=".ScrollAccessibilityService"
+            android:name="com.ScrollTracker.scrolltracker.ScrollAccessibilityService"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
@@ -30,7 +30,7 @@
 
         <!-- MainActivity -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.ScrollTracker.scrolltracker.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

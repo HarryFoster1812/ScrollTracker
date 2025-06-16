@@ -1,4 +1,4 @@
-package com.example.scrolltracker;
+package com.ScrollTracker.scrolltracker;
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -13,6 +13,8 @@ import android.util.Log;
 import android.content.Intent;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.scrolltracker.R;
 
 public class ScrollAccessibilityService extends AccessibilityService {
 

@@ -1,36 +1,31 @@
-package com.example.scrolltracker;
+package com.ScrollTracker.scrolltracker;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import java.time.LocalDate;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+
+import com.example.scrolltracker.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class SettingsFragment extends Fragment {
 
     private SharedPreferences sharedPreferences;
-    private Switch switchNotifications;
+    private SwitchMaterial switchNotifications;
     private MaterialCardView themeView;
+
 
     @Nullable
     @Override
@@ -55,6 +50,27 @@ public class SettingsFragment extends Fragment {
         switchNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             sharedPreferences.edit().putBoolean("notifications", isChecked).apply();
             Toast.makeText(getContext(), "Notifications " + (isChecked ? "Enabled" : "Disabled"), Toast.LENGTH_SHORT).show();
+        });
+
+        MaterialCardView credits_card = view.findViewById(R.id.creditsShow);
+        credits_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = requireActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction();
+
+                transaction.setCustomAnimations(
+                        R.anim.slide_in_right,  // enter
+                        R.anim.stay_put,        // exit (current fragment stays)
+                        R.anim.stay_put_back,   // popEnter (when coming back, underlying fragment stays)
+                        R.anim.slide_out_right  // popExit (new fragment slides out)
+                );
+
+                transaction.replace(R.id.fragment_container_view, new CreditsFragment());
+                transaction.addToBackStack(null);  // Enables back navigation
+                transaction.commit();
+            }
         });
 
         // Handle Clear Data

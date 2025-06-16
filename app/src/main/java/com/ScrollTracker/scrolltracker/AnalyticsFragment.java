@@ -1,23 +1,20 @@
-package com.example.scrolltracker;
+package com.ScrollTracker.scrolltracker;
 
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.scrolltracker.R;
 import com.google.android.material.tabs.TabLayout;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
 
 public class AnalyticsFragment extends Fragment {

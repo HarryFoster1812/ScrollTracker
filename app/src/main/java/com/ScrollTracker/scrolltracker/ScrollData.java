@@ -1,8 +1,4 @@
-package com.example.scrolltracker;
-
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.util.Log;
+package com.ScrollTracker.scrolltracker;
 
 import java.util.HashMap;
 import java.util.Map;

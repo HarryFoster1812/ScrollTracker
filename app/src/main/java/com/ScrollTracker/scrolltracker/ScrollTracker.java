@@ -1,4 +1,4 @@
-package com.example.scrolltracker;
+package com.ScrollTracker.scrolltracker;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -10,8 +10,6 @@ import androidx.annotation.RequiresApi;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/credit_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:fillViewport="true"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="#1E1E1E"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/appTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_info"
+                android:drawablePadding="8dp"
+                android:paddingBottom="24dp"
+                android:text="Credits &amp; Copyright"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="16dp"
+                android:background="#33FFFFFF" />
+
+            <TextView
+                android:id="@+id/developerText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_developer"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp"
+                android:text="Developed by\nHarry Foster"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ideaText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_idea"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp"
+                android:text="Original Concept\nHammad Aslam"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="16dp"
+                android:background="#33FFFFFF" />
+
+            <TextView
+                android:id="@+id/copyrightText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
+                android:text="© 2025 Harry Foster. All rights reserved.\n\nProtected under international copyright laws."
+                android:textColor="#B0FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/thirdPartyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
+                android:text="Third-Party Libraries\nThis app uses open-source libraries. See Open Source Licenses for details."
+                android:textColor="#B0FFFFFF"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="16dp"
+                android:background="#33FFFFFF" />
+
+            <TextView
+                android:id="@+id/sourceCodeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:background="?android:selectableItemBackground"
+                android:drawableStart="@drawable/ic_github"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp"
+                android:text="Source Code\nhttps://github.com/HarryFoster1812/ScrollTracker"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="16dp"
+                android:background="#33FFFFFF" />
+
+            <TextView
+                android:id="@+id/contactText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="email"
+                android:background="?android:selectableItemBackground"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="8dp"
+                android:paddingVertical="12dp"
+                android:text="Contact\nharrywfoster10@gmail.com"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</ScrollView>
