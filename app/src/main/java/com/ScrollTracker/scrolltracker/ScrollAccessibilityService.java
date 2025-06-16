@@ -3,6 +3,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.view.WindowManager;
 import android.content.Context;
@@ -108,7 +109,10 @@ public class ScrollAccessibilityService extends AccessibilityService {
                     .setOngoing(true) // Makes it non-dismissible
                     .build();
 
-            startForeground(1, notification); // Start foreground with notification ID 1
+            startForeground(
+                        1,
+                        notification,
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
         } else {
             // For older Android versions
             Notification notification = new Notification.Builder(this)

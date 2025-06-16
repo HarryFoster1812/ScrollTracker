@@ -2,18 +2,30 @@ package com.ScrollTracker.scrolltracker;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.content.Context;
+import android.util.ArraySet;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.example.scrolltracker.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class ScrollTracker {
     @JsonProperty("dataMap")
@@ -33,7 +45,7 @@ public class ScrollTracker {
         }
         else{
             scrollData = new HashMap<>();
-            scrollData.put(LocalDate.now().toString(), new ScrollData());
+            scrollData.put(LocalDate.now().toString(), new ScrollData(this.context));
             writeScrollDataToFile();
         }
     }
@@ -81,7 +93,7 @@ public class ScrollTracker {
         }
 
         else{
-            result = new ScrollData();
+            result = new ScrollData(this.context);
             result.addDistance(packageName, distance);
             scrollData.put(LocalDate.now().toString(), result);
         }
@@ -99,17 +111,54 @@ public class ScrollTracker {
         return result.calculateTotal();
     }
 
-    public String getAppNameFromPackage(String packageName) {
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
-            return (String) packageManager.getApplicationLabel(applicationInfo);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return packageName; // Fallback to package name if not found
+    public Set<Map.Entry<String, ScrollData>> getScrollData(){
+        return this.scrollData.entrySet();
+    }
+
+    public Set<Map.Entry<String, ScrollData>> getScrollData(String date){
+        try{
+            ScrollData data = scrollData.get(date);
+            Map<String, ScrollData> dataMap = new HashMap<>();
+            dataMap.put(date, data);
+            return dataMap.entrySet();
+
+        } catch(Exception e) {
+            return null;
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+
+    public Set<Map.Entry<String, ScrollData>> getScrollData(String startDate, String endDate){
+        LocalDate startLocalDate = LocalDate.parse(startDate);
+        LocalDate endLocalDate = LocalDate.parse(endDate);
+
+        try{
+
+            Set<Map.Entry<String, ScrollData>> dataSet = new ArraySet<>();
+            for (Map.Entry<String, ScrollData> entry: scrollData.entrySet()) {
+
+                LocalDate entryDate = LocalDate.parse(entry.getKey().toString());
+                if(entryDate.compareTo(startLocalDate) >= 0 && entryDate.compareTo(endLocalDate) <=0){
+                    dataSet.add(entry);
+                }
+            }
+            return dataSet;
+
+        } catch(Exception e) {
+            return null;
+        }
+    }
+
+    public Drawable getAppIcon(String packageName){
+        try {
+            return context.getPackageManager().getApplicationIcon(packageName);
+        } catch(Exception e){
+            Drawable placeholder = new ColorDrawable(Color.GRAY);
+            placeholder.setBounds(0, 0, 192, 192); // Typical icon size in px
+            return placeholder;
+        }
+    }
 
     public void logScrollData(){
         for (Map.Entry<String, ScrollData> entry : scrollData.entrySet()) {

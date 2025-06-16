@@ -46,11 +46,11 @@ dependencies {
     implementation(libs.fragment)
 
     // For Charts
-    //implementation("com.github.PhilJay:MPAndroidChart:v3.1.0'")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // ViewPager2 for carousel
     implementation(libs.viewpager2)
 
     // RecyclerView for app list
-    //implementation(libs.recyclerview)
+    implementation(libs.recyclerview)
 }

@@ -1,0 +1,7 @@
+<resources>
+    <!-- Recommended item height for tappable rows -->
+    <dimen name="list_item_height">56dp</dimen> <!-- Between 48dp and 64dp is ideal -->
+
+    <!-- Consistent margin to match RecyclerView parent padding -->
+    <dimen name="margin_medium">16dp</dimen>
+</resources>
