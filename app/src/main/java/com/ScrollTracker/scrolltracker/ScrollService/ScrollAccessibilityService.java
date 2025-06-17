@@ -1,4 +1,4 @@
-package com.ScrollTracker.scrolltracker;
+package com.ScrollTracker.scrolltracker.ScrollService;
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.app.NotificationChannel;

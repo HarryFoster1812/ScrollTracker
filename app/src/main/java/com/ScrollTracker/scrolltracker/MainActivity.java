@@ -20,6 +20,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.ScrollTracker.scrolltracker.FragmentControllers.Analytics.AnalyticsFragment;
+import com.ScrollTracker.scrolltracker.FragmentControllers.HomeFragment;
+import com.ScrollTracker.scrolltracker.FragmentControllers.Settings.SettingsFragment;
+import com.ScrollTracker.scrolltracker.ScrollService.ScrollAccessibilityService;
+import com.ScrollTracker.scrolltracker.ScrollService.ScrollTracker;
 import com.example.scrolltracker.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;

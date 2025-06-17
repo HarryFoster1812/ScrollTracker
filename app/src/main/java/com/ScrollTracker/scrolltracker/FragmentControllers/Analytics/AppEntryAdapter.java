@@ -1,6 +1,5 @@
-package com.ScrollTracker.scrolltracker;
+package com.ScrollTracker.scrolltracker.FragmentControllers.Analytics;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;

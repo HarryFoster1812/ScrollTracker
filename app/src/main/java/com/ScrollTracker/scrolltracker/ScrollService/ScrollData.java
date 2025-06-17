@@ -1,4 +1,4 @@
-package com.ScrollTracker.scrolltracker;
+package com.ScrollTracker.scrolltracker.ScrollService;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

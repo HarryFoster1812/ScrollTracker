@@ -1,4 +1,4 @@
-package com.ScrollTracker.scrolltracker;
+package com.ScrollTracker.scrolltracker.FragmentControllers;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.ScrollTracker.scrolltracker.ScrollService.ScrollTracker;
 import com.example.scrolltracker.R;
 import com.google.android.material.card.MaterialCardView;
 

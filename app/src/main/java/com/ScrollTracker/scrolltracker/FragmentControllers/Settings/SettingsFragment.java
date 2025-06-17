@@ -1,4 +1,4 @@
-package com.ScrollTracker.scrolltracker;
+package com.ScrollTracker.scrolltracker.FragmentControllers.Settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.scrolltracker.R;

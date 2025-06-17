@@ -1,4 +1,4 @@
-package com.ScrollTracker.scrolltracker;
+package com.ScrollTracker.scrolltracker.FragmentControllers.Analytics;
 
 import android.graphics.drawable.Drawable;
 
@@ -13,5 +13,7 @@ public class AppEntry{
         this.distance = distance;
         this.packageName = packageName;
     }
+
+
 }
 
