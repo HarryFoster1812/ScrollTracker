@@ -27,12 +27,10 @@ public class ScrollAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event){
         int eventType = event.getEventType();
-        Log.d("ScrolAccessibilitylEvent", AccessibilityEvent.eventTypeToString(eventType));
 
         switch (eventType){
             case AccessibilityEvent.TYPE_VIEW_SCROLLED:
 
-                Log.d("ScrollService", "Scroll Detected Y:" + event.getScrollDeltaY() + " X:"+ event.getScrollDeltaX());
                 double distance = 0;
                 distance += (Math.abs((double)event.getScrollDeltaY())/(double)DPI)*2.54;
                 distance += (Math.abs((double)event.getScrollDeltaX())/(double)DPI)*2.54;
@@ -41,7 +39,6 @@ public class ScrollAccessibilityService extends AccessibilityService {
                 intent.putExtra("distance", distance);
                 intent.putExtra("package", event.getPackageName());
                 sendBroadcast(intent);
-                Log.d("ScrollService", "Broadcast sent!");
 
                 break;
 
@@ -54,9 +51,7 @@ public class ScrollAccessibilityService extends AccessibilityService {
                 if (source != null) {
                     // Try to check the scroll position using AccessibilityNodeInfo
                     // This requires traversing the accessibility tree or querying the scroll properties of the node
-                    Log.d("ScrollService", "Root is not not null.");
                 }
-                Log.d("WINDOWCONTENTCHANGED", "DeltaY:" + DeltaY + ", DeltaX:" + DeltaX);
                 if (DeltaX != -1 || DeltaY !=-1){
                     float deltaX = event.getScrollDeltaX();
                     float deltaY = event.getScrollDeltaY();

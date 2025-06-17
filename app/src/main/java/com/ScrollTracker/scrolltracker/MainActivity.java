@@ -1,5 +1,7 @@
 package com.ScrollTracker.scrolltracker;
 
+import static android.view.View.INVISIBLE;
+
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.BroadcastReceiver;
@@ -7,15 +9,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ScrollTracker.scrolltracker.FragmentControllers.Analytics.AnalyticsFragment;
 import com.ScrollTracker.scrolltracker.FragmentControllers.HomeFragment;
 import com.ScrollTracker.scrolltracker.FragmentControllers.Settings.SettingsFragment;
+import com.ScrollTracker.scrolltracker.FragmentControllers.WelcomeFragment.WelcomeFragment;
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollAccessibilityService;
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollTracker;
 import com.example.scrolltracker.R;
@@ -38,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
     String PACKAGE_NAME;
     ScrollTracker tracker;
-    HomeFragment homeFragment;
+    public BottomNavigationView bottom_nav;
+    public HomeFragment homeFragment;
     Fragment currentFragment;
 
     // Receiver for receiving distance updates from ScrollAccessibilityService
     private final BroadcastReceiver distanceReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("MainActivity", "Broadcast Recieved!");
             if (intent != null && "com.example.scrolltracker.DISTANCE_UPDATED".equals(intent.getAction())) {
                 double distance = intent.getDoubleExtra("distance", 0f);
                 String action_package_name = intent.getStringExtra("package");
@@ -88,40 +95,41 @@ public class MainActivity extends AppCompatActivity {
         // Initialise ScrollTracker
 
         tracker = new ScrollTracker(this.getApplicationContext());
+         bottom_nav = findViewById(R.id.bottomNavigation);
 
+        // check permissions
+        boolean allPermissionsGranted = checkAllPermissions();
         homeFragment = new HomeFragment(tracker);
-        loadFragment(homeFragment, "HOME_FRAGMENT");
-        BottomNavigationView bottom_nav = findViewById(R.id.bottomNavigation);
+
+        if(allPermissionsGranted) {
+            loadFragment(homeFragment);
+        }
+        else{
+            // load welcome fragment
+            loadFragment(new WelcomeFragment(this));
+            bottom_nav.setVisibility(INVISIBLE);
+        }
+
         bottom_nav.setOnItemSelectedListener(item -> {
             Fragment selected_fragment = null;
-            String tag= "";
             int id = item.getItemId();
 
             if (id == R.id.nav_home) {
                 selected_fragment = homeFragment;
-                tag = "HOME_FRAGMENT";
             } else if (id == R.id.nav_analytics) {
                 selected_fragment = new AnalyticsFragment(this.tracker);
-                tag = "ANALYTICS_FRAGMENT";
 
             } else if (id == R.id.nav_settings) {
                 selected_fragment = new SettingsFragment();
-                tag = "SETTINGS_FRAGMENT";
 
             }
-            loadFragment(selected_fragment, tag);
+            loadFragment(selected_fragment);
             return true;
         });
 
         // Register the receiver dynamically to listen for the distance updates
         IntentFilter filter = new IntentFilter("com.example.scrolltracker.DISTANCE_UPDATED");
         registerReceiver(distanceReceiver, filter, Context.RECEIVER_EXPORTED);
-
-        boolean isEnabled = isAccessibilityServiceEnabled(getApplicationContext(), ScrollAccessibilityService.class);
-        if (!isEnabled) {
-            showAccessibilitySnackbar();
-        }
-
     }
 
     @Override
@@ -134,10 +142,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         boolean isEnabled = isAccessibilityServiceEnabled(getApplicationContext(), ScrollAccessibilityService.class);
-        if (!isEnabled) {
+        if (!isEnabled && !(currentFragment instanceof WelcomeFragment)) {
             showAccessibilitySnackbar();
         }
 
+    }
+
+    public boolean checkAllPermissions(){
+        boolean accessibilityEnabled = isAccessibilityServiceEnabled(getApplicationContext(), ScrollAccessibilityService.class);
+        boolean notificationEnabled = isNotificationsEnabled(getApplicationContext());
+        boolean isBatteryNotOptimised = isBatteryOptimizationIgnored(getApplicationContext());
+        return accessibilityEnabled && notificationEnabled && isBatteryNotOptimised;
     }
 
     private void updateHomeFragmentUI(double distance){
@@ -173,7 +188,24 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    private void loadFragment(Fragment fragment, String tag) {
+    public boolean isBatteryOptimizationIgnored(Context context) {
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        return pm != null && pm.isIgnoringBatteryOptimizations(context.getPackageName());
+    }
+
+    public boolean isNotificationsEnabled(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)
+                    == PackageManager.PERMISSION_GRANTED;
+        } else {
+            NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+            return manager.areNotificationsEnabled();
+        }
+    }
+
+
+
+    public void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container_view, fragment);

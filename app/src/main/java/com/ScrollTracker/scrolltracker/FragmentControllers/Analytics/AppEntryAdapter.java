@@ -69,6 +69,11 @@ public class AppEntryAdapter extends RecyclerView.Adapter<AppEntryAdapter.ViewHo
 
     }
 
+    public void setData(List<AppEntry> newData){
+        this.localDataSet = newData;
+        notifyDataSetChanged();
+    }
+
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {

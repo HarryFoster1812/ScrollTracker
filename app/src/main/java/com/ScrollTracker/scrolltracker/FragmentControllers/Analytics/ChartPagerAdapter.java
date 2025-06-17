@@ -49,7 +49,7 @@ public class ChartPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new LineChartFragment(chartData.get(1), "Week");
             case 2:
-                return new LineChartFragment(chartData.get(3), "Month");
+                return new LineChartFragment(chartData.get(2), "Month");
             default:
                 throw new IndexOutOfBoundsException("The given index is out of bounds");
         }

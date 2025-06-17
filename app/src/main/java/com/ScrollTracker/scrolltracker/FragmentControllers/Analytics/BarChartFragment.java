@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.scrolltracker.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -60,8 +61,15 @@ public class BarChartFragment extends Fragment {
         xAxis.setGranularityEnabled(true);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(Color.WHITE);
         xAxis.setDrawGridLines(false);
         xAxis.setLabelRotationAngle(-45);
+
+
+        YAxis yAxis = barChart.getAxisLeft();
+        yAxis.setTextColor(Color.WHITE);
+        yAxis.setDrawGridLines(true);
+        yAxis.setAxisLineColor(Color.WHITE);
 
         barChart.getDescription().setEnabled(false);
         barChart.getAxisRight().setEnabled(false);

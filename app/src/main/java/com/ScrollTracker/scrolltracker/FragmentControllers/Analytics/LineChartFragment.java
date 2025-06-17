@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -63,8 +64,14 @@ public class LineChartFragment extends Fragment {
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(Color.WHITE);
         xAxis.setLabelRotationAngle(-45); // Optional: rotate for readability
         xAxis.setValueFormatter(new IndexAxisValueFormatter(dateLabels));
+
+        YAxis yAxis = lineChart.getAxisLeft();
+        yAxis.setTextColor(Color.WHITE);
+        yAxis.setDrawGridLines(true);
+        yAxis.setAxisLineColor(Color.WHITE);
 
         lineChart.getDescription().setEnabled(false);
         lineChart.getAxisRight().setEnabled(false); // Optional

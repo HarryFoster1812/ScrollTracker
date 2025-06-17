@@ -85,8 +85,10 @@ public class AnalyticsFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if(!eventListenerRunning) {
+                    eventListenerRunning = true;
                     // This is triggered when the page is changed (swiped)
                     tabLayout.selectTab(tabLayout.getTabAt(position));
+                    eventListenerRunning = false;
                 }
             }
             @Override
@@ -113,6 +115,7 @@ public class AnalyticsFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 handleTab(tab);
             }
             @Override public void onTabUnselected(TabLayout.Tab tab) {}
@@ -137,11 +140,13 @@ public class AnalyticsFragment extends Fragment {
 
     private void handleTab(TabLayout.Tab tab){
         if(!eventListenerRunning) {
+            eventListenerRunning = true;
             int selectedIndex = tab.getPosition();
 
             viewPagerCharts.setCurrentItem(selectedIndex);
             changeGraph(selectedIndex);
             setAppInfo(selectedIndex);
+            eventListenerRunning = false;
         }
          // trigger chart to change
     }
@@ -160,10 +165,11 @@ public class AnalyticsFragment extends Fragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     void parseScrollDataForGraph(){
         parseBarData();
-        parseWeekLineData();
-        parseMonthLineData();
+        parseLineData("Week");
+        parseLineData("Month");
     }
 
     void parseBarData(){
@@ -178,13 +184,45 @@ public class AnalyticsFragment extends Fragment {
         graphData.add(barData);
     }
 
-    void parseWeekLineData(){
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void parseLineData(String mode){
+
+        Set<Map.Entry<String, ScrollData>> rawData = data.get(0);
+        List<Pair<String, Double>> chartData = new ArrayList<>();
+
+        List<String> dates = new ArrayList<>();
+        LocalDate tempDate;
+        switch(mode){
+            case "Week": tempDate = LocalDate.now().minusWeeks(1); break;
+            case "Month": tempDate= LocalDate.now().minusMonths(1); break;
+            default: throw new IllegalStateException("Not valid mode");
+        };
+
+
+        // get all dates
+        while (!tempDate.equals(LocalDate.now().plusDays(1))){
+            dates.add(tempDate.toString());
+            tempDate = tempDate.plusDays(1);
+        }
+
+        for (String date : dates) {
+            // Try to find the entry where the key equals the current date
+            Map.Entry<String, ScrollData> match = rawData.stream()
+                    .filter(entry -> entry.getKey().equals(date))
+                    .findFirst()
+                    .orElse(null);
+
+            if (match != null) {
+                chartData.add(new Pair<>(date, match.getValue().calculateTotal()));
+            } else {
+                chartData.add(new Pair<>(date, 0.0)); // No data for that day
+            }
+        }
+
+        graphData.add(chartData);
     }
 
-    void parseMonthLineData(){
-
-    }
 
     void changeGraph(int position){
         // based on the mode parse the data into week/ day collectives
@@ -197,7 +235,7 @@ public class AnalyticsFragment extends Fragment {
     void setAppInfo(int index) {
 
         if (cachedAppEntries.containsKey(index)) {
-            recyclerViewApps.setAdapter(new AppEntryAdapter(cachedAppEntries.get(index)));
+            adapter.setData(cachedAppEntries.get(index));
             return;
         }
 
@@ -220,7 +258,7 @@ public class AnalyticsFragment extends Fragment {
         for(AppEntry app: tempApps){
             if(apps.stream().anyMatch(a -> a.packageName.equals(app.packageName))) continue;
             List<AppEntry> samePackage = tempApps.stream().filter(a -> a.packageName.equals(app.packageName) && a != app).collect(Collectors.toList());
-            if (samePackage.size() == 0) continue;
+            if (samePackage.size() != 0) continue;
 
             for(AppEntry duplicateApp: samePackage){
                 app.distance += duplicateApp.distance;
@@ -229,7 +267,7 @@ public class AnalyticsFragment extends Fragment {
         }
 
         cachedAppEntries.put(index, apps);
-        recyclerViewApps.setAdapter(new AppEntryAdapter(apps));
+        adapter.setData(cachedAppEntries.get(index));
 
     }
 
