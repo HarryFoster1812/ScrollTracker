@@ -19,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollData;
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollDataComparator;
+import com.ScrollTracker.scrolltracker.ScrollService.ScrollEntry;
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollTracker;
 import com.example.scrolltracker.R;
 import com.google.android.material.tabs.TabLayout;
@@ -176,8 +177,8 @@ public class AnalyticsFragment extends Fragment {
         Set<Map.Entry<String, ScrollData>> rawData = data.get(0);
         List<Pair<String, Double>> barData = new ArrayList<>();
         for(Map.Entry<String, ScrollData> dateEntry: rawData){
-            for(Map.Entry<String, Pair<Double, String>> entry: dateEntry.getValue().getDataMap().entrySet()){
-                barData.add(new Pair<>(entry.getValue().second, entry.getValue().first));
+            for(Map.Entry<String, ScrollEntry> entry: dateEntry.getValue().getDataMap().entrySet()){
+                barData.add(new Pair<>(entry.getValue().getAppName(), entry.getValue().getDistance()));
             }
         }
 
@@ -243,10 +244,10 @@ public class AnalyticsFragment extends Fragment {
         List<AppEntry> tempApps = new ArrayList<>();
 
         for (Map.Entry<String, ScrollData> entry : data.get(index)) {
-            for (Map.Entry<String, Pair<Double, String>> entry1 : entry.getValue().getDataMap().entrySet()) {
+            for (Map.Entry<String, ScrollEntry> entry1 : entry.getValue().getDataMap().entrySet()) {
                 // Copy the key and the Pair object
-                String appName = entry1.getValue().second;
-                double distance = entry1.getValue().first;
+                String appName = entry1.getValue().getAppName();
+                double distance = entry1.getValue().getDistance();
                 Drawable appIcon = tracker.getAppIcon(entry1.getKey());
                 tempApps.add(new AppEntry(entry1.getKey(),appName, distance, appIcon));
             }

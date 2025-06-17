@@ -12,9 +12,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ScrollData {
     @JsonProperty("distanceMap")
-    private Map<String, Pair<Double, String>> distanceMap; //  Map<PackageName, Pair<Distance(cm), AppName>>
+    private Map<String, ScrollEntry> distanceMap; //  Map<PackageName, Pair<Distance(cm), AppName>>
     private Context context;
 
+    public ScrollData() {
+        this.distanceMap = new HashMap<>();
+    }
     public ScrollData(Context context) {
         this.distanceMap = new HashMap<>();
         this.context = context;
@@ -23,21 +26,21 @@ public class ScrollData {
     public void addDistance(String packageName, double distance) {
         if (!containsPackage(packageName)) {
             String appName = getAppNameFromPackage(packageName);
-            distanceMap.put(packageName, new Pair<>(distance, appName));
+            distanceMap.put(packageName, new ScrollEntry(distance, appName));
         } else {
-            Pair<Double, String> entry = distanceMap.get(packageName);
-            double currentDistance = entry.first;
+            ScrollEntry entry = distanceMap.get(packageName);
+            double currentDistance = entry.getDistance();
             double new_distance = currentDistance + distance;
-            distanceMap.put(packageName, new Pair<>(new_distance, entry.second));
+            distanceMap.put(packageName, new ScrollEntry(new_distance, entry.getAppName()));
         }
     }
 
-    public Map<String, Pair<Double, String>> getDataMap(){
+    public Map<String, ScrollEntry> getDataMap(){
         return this.distanceMap;
     }
 
     public double getDistance(String packageName) {
-        return distanceMap.getOrDefault(packageName, new Pair<>(Double.MIN_VALUE, "")).first;
+        return distanceMap.getOrDefault(packageName, new ScrollEntry(Double.MIN_VALUE, "")).getDistance();
     }
 
     public boolean containsPackage(String packageName) {
@@ -46,8 +49,8 @@ public class ScrollData {
 
     public double calculateTotal() {
         double total = 0;
-        for (Map.Entry<String, Pair<Double, String>> entry : distanceMap.entrySet()) {
-            total += entry.getValue().first;
+        for (Map.Entry<String, ScrollEntry> entry : distanceMap.entrySet()) {
+            total += entry.getValue().getDistance();
         }
         return total;
     }
@@ -65,9 +68,11 @@ public class ScrollData {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Pair<Double, String>> entry : distanceMap.entrySet())
-            sb.append("Package: " + entry.getKey() + "\tAppname: " + entry.getValue().second + "\tDistance: " + entry.getValue().first + "\n");
+        for (Map.Entry<String, ScrollEntry> entry : distanceMap.entrySet())
+            sb.append("Package: " + entry.getKey() + "\tAppname: " + entry.getValue().getAppName() + "\tDistance: " + entry.getValue().getDistance() + "\n");
         return sb.toString();
     }
 
 }
+
+
