@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             app:tabIndicatorColor="#00E5FF"
             app:tabTextColor="#B0BEC5"
+            app:tabBackground="@color/cardview_dark_background"
             app:tabSelectedTextColor="#00E5FF"
             app:tabMode="fixed"/>
 

@@ -61,20 +61,23 @@ public class WelcomeFragment extends Fragment {
 
         // Connect TabLayout with ViewPager2
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {}).attach();
+        tabLayout.getTabAt(0).setText("1");
+        tabLayout.getTabAt(1).setText("2");
+        tabLayout.getTabAt(2).setText("3");
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(i);
+            tabView.setOnTouchListener((v, event) -> true); // Consume all touch events
+        }
+
         return view;
     }
 
-    private void openAccessibilitySettings() {
-        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-        startActivity(intent);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void switchToHome(){
+        activity.bottom_nav.setVisibility(VISIBLE);
+        activity.loadFragment(activity.homeFragment);
     }
-
-    private void openBatterySettings(){
-        Intent intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-        startActivity(intent);
-    }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onPermissionGranted(int position) {

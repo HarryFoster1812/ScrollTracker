@@ -43,9 +43,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:tabGravity="center"
+        app:tabGravity="fill"
         app:tabIndicatorColor="#FF5722"
         app:tabIndicatorHeight="4dp"
+        app:tabBackground="@android:color/black"
+        app:tabTextColor="@android:color/white"
         app:tabMode="fixed"/>
 
     <!-- Privacy Note -->
@@ -61,7 +63,7 @@
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_lock"
-            android:tint="@android:color/darker_gray"
+            app:tint="@android:color/darker_gray"
             android:contentDescription="Privacy Icon" />
 
         <TextView
