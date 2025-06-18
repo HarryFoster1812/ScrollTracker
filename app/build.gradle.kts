@@ -53,4 +53,5 @@ dependencies {
 
     // RecyclerView for app list
     implementation(libs.recyclerview)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

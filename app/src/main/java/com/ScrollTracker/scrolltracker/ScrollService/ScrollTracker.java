@@ -1,5 +1,7 @@
 package com.ScrollTracker.scrolltracker.ScrollService;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -38,7 +40,7 @@ public class ScrollTracker {
         }
         else{
             scrollData = new HashMap<>();
-            scrollData.put(LocalDate.now().toString(), new ScrollData(this.context));
+            scrollData.put(LocalDate.now().toString(), new ScrollData());
             writeScrollDataToFile();
         }
     }
@@ -53,6 +55,7 @@ public class ScrollTracker {
 
             // Deserialize the JSON file to a Map<Date, ScrollData>
             File jsonFile = new File(context.getFilesDir(), fileName);
+
             return objectMapper.readValue(jsonFile, objectMapper.getTypeFactory().constructMapType(HashMap.class, String.class, ScrollData.class));
 
         } catch (Exception e) {
@@ -87,18 +90,31 @@ public class ScrollTracker {
     public void addDistance(String packageName, double distance){
         // try and get the scroll data
         ScrollData result = scrollData.get(LocalDate.now().toString());
+        String appName = getAppNameFromPackage(packageName);
 
         if (result != null){
-            result.addDistance(packageName, distance);
+            result.addDistance(packageName, distance, appName);
         }
 
         else{
-            result = new ScrollData(this.context);
-            result.addDistance(packageName, distance);
+            result = new ScrollData();
+            result.addDistance(packageName, distance, appName);
             scrollData.put(LocalDate.now().toString(), result);
         }
         writeScrollDataToFile();
 
+    }
+
+
+    public String getAppNameFromPackage(String packageName) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+            return (String) packageManager.getApplicationLabel(applicationInfo);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return packageName; // Fallback to package name if not found
+        }
     }
 
     public double getTotalDistance(LocalDate date){

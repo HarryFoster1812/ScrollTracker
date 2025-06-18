@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollData;
@@ -75,12 +76,31 @@ public class AnalyticsFragment extends Fragment {
             requireActivity().runOnUiThread(() -> {
                 // Safe to touch views here
                 viewPagerCharts.setAdapter(new ChartPagerAdapter(this, graphData));
-                viewPagerCharts.setCurrentItem(1);
+                viewPagerCharts.setCurrentItem(0);
             });
         };
         Thread t = new Thread(runnable);
         t.start();
         // add to the viewPager
+
+        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Runnable swipeRefreshRunnable = () -> {
+                cachedAppEntries.clear();
+                data.clear();
+                graphData.clear();
+                getScrollData();
+                parseScrollDataForGraph();
+                requireActivity().runOnUiThread(() -> {
+                    // Safe to touch views here
+                    viewPagerCharts.setAdapter(new ChartPagerAdapter(AnalyticsFragment.this, graphData));
+                    viewPagerCharts.setCurrentItem(0);
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+            };
+            Thread t1 = new Thread(swipeRefreshRunnable);
+            t1.start();
+        });
 
         viewPagerCharts.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             public void onPageSelected(int position) {
@@ -274,6 +294,8 @@ public class AnalyticsFragment extends Fragment {
             }
             apps.add(app);
         }
+
+        // Add Sorting on the total distance
 
         cachedAppEntries.put(index, apps);
         adapter.setData(cachedAppEntries.get(index));

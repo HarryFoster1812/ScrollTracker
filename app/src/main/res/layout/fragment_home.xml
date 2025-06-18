@@ -108,11 +108,6 @@
                 android:layout_marginBottom="16dp" />
 
             <!-- Equivalents Cards -->
-            <include layout="@layout/item_equivalent_card"
-                android:id="@+id/cardWalkingTime"
-                android:tag="Walking Time"
-
-                android:text="Walking x minutes" />
 
             <include layout="@layout/item_equivalent_card"
                 android:id="@+id/cardCarLength"
@@ -131,6 +126,13 @@
                 android:tag="Swimming Pool"
 
                 android:text="x Olympic Swimming Pools" />
+
+            <include layout="@layout/item_equivalent_card"
+                android:id="@+id/cardWalkingTime"
+                android:tag="Walking Time"
+
+                android:text="Walking x seconds" />
+
         </LinearLayout>
 
     </LinearLayout>

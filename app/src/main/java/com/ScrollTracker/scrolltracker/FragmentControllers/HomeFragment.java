@@ -107,27 +107,31 @@ public class HomeFragment extends Fragment {
 
         String time_string= "";
 
-        if (walkingTimeHours < 1){
+        if(walkingTimeMinutes < 1){
+            time_string = String.format("%.5f seconds", walkingTimeSeconds);
+        }
+
+        else if (walkingTimeHours < 1){
             // set text to walking time in minutes
-            time_string = String.format("%d minutes", (int)Math.floor(walkingTimeMinutes));
+            time_string = String.format("%.5f minutes", walkingTimeMinutes);
         }
         else{
             // set text to x hours and y minutes
             walkingTimeMinutes = walkingTimeMinutes - (walkingTimeHours * 60);
-            time_string = String.format("%d hours and %d minutes", (int)Math.floor(walkingTimeHours), (int)Math.floor(walkingTimeMinutes));
+            time_string = String.format("%.5f hours and %.5f minutes", walkingTimeHours, walkingTimeMinutes);
 
         }
 
         // Set all of the text views to the new comparisons
 
         TextView tvCarLength = cardCarLength.findViewById(R.id.tvEquivalentText);
-        tvCarLength.setText(carLength + " Car Lengths");
+        tvCarLength.setText(String.format("%.5f",carLength) + " Car Lengths");
 
         TextView tvTennis = cardTennis.findViewById(R.id.tvEquivalentText);
-        tvTennis.setText(tennisLength + " Tennis Courts");
+        tvTennis.setText(String.format("%.5f",tennisLength) + " Tennis Courts");
 
         TextView tvSwimming = cardSwimming.findViewById(R.id.tvEquivalentText);
-        tvSwimming.setText(olympicSwimmingPoolLength + " Olympic Swimming Pools");
+        tvSwimming.setText(String.format("%.5f",olympicSwimmingPoolLength) + " Olympic Swimming Pools");
 
         TextView tvWalking = cardWalking.findViewById(R.id.tvEquivalentText);
         tvWalking.setText("The distance covered when walking for " + time_string);
