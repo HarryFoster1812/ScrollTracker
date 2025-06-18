@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +59,13 @@ public class ScrollTracker {
             e.printStackTrace();
             return new HashMap<>(); // Return an empty map if there's an error
         }
+    }
+
+    public static void clearData(Context context) throws IOException {
+        scrollData = new HashMap<>();
+        File jsonFile = new File(context.getFilesDir(), fileName);
+        if(!jsonFile.exists()) return;
+        objectMapper.writeValue(jsonFile, scrollData);
     }
 
     // Write ScrollData to a JSON file

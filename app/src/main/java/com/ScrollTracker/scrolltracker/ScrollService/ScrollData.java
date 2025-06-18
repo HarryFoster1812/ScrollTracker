@@ -69,7 +69,13 @@ public class ScrollData {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, ScrollEntry> entry : distanceMap.entrySet())
-            sb.append("Package: " + entry.getKey() + "\tAppname: " + entry.getValue().getAppName() + "\tDistance: " + entry.getValue().getDistance() + "\n");
+            sb.append("Package: ")
+                    .append(entry.getKey())
+                    .append("\tAppname: ")
+                    .append(entry.getValue().getAppName())
+                    .append("\tDistance: ")
+                    .append(entry.getValue().getDistance())
+                    .append("\n");
         return sb.toString();
     }
 

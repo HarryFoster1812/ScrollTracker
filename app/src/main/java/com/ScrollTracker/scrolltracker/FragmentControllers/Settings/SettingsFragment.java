@@ -13,11 +13,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import com.ScrollTracker.scrolltracker.ScrollService.ScrollTracker;
 import com.example.scrolltracker.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import java.io.IOException;
 
 public class SettingsFragment extends Fragment {
 
@@ -80,6 +83,11 @@ public class SettingsFragment extends Fragment {
                     .setMessage("Are you sure you want to clear all data?")
                     .setPositiveButton("Yes", (dialog, which) -> {
                         sharedPreferences.edit().clear().apply();
+                        try {
+                            ScrollTracker.clearData(getContext());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         Toast.makeText(getContext(), "Data cleared", Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Cancel", null)

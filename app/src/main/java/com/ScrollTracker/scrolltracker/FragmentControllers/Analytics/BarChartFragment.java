@@ -38,6 +38,14 @@ public class BarChartFragment extends Fragment {
 
         BarChart barChart = view.findViewById(R.id.barChart);
 
+
+        if(dataPairs.isEmpty()){
+            barChart.setNoDataText("No data available");
+            barChart.setNoDataTextColor(Color.WHITE); // Optional: color
+            barChart.invalidate(); // Force redraw
+            return view;
+        }
+
         List<BarEntry> entries = new ArrayList<>();
         List<String> labels = new ArrayList<>();
         for (int i = 0; i < dataPairs.size(); i++) {

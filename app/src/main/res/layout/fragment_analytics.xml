@@ -60,11 +60,6 @@
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-        <Button
-            android:id="@+id/getInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

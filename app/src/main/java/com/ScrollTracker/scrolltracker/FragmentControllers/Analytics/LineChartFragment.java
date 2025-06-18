@@ -42,6 +42,13 @@ public class LineChartFragment extends Fragment {
         List<Entry> entries = new ArrayList<>();
         List<String> dateLabels = new ArrayList<>();
 
+        if(lineData.isEmpty()){
+            lineChart.setNoDataText("No data available");
+            lineChart.setNoDataTextColor(Color.WHITE); // Optional: color
+            lineChart.invalidate(); // Force redraw
+            return view;
+        }
+
         for (int i = 0; i < lineData.size(); i++) {
             Pair<String, Double> pair = lineData.get(i);
             entries.add(new Entry(i, pair.second.floatValue()));

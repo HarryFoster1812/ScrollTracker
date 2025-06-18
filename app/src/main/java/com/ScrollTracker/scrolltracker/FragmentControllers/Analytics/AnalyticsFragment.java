@@ -123,15 +123,8 @@ public class AnalyticsFragment extends Fragment {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        ((Button)view.findViewById(R.id.getInfo)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tracker.logScrollData();
-            }
-        });
 
         // Connect viewPager to tabs
-
         tabLayout.post(() -> tabLayout.post(()->handleTab(tabLayout.getTabAt(0)))); // manually handle the first tab
 
         return view;
@@ -176,6 +169,12 @@ public class AnalyticsFragment extends Fragment {
     void parseBarData(){
         Set<Map.Entry<String, ScrollData>> rawData = data.get(0);
         List<Pair<String, Double>> barData = new ArrayList<>();
+
+        if (rawData.isEmpty() || rawData.iterator().next().getValue() == null){
+            graphData.add(barData);
+            return;
+        }
+
         for(Map.Entry<String, ScrollData> dateEntry: rawData){
             for(Map.Entry<String, ScrollEntry> entry: dateEntry.getValue().getDataMap().entrySet()){
                 barData.add(new Pair<>(entry.getValue().getAppName(), entry.getValue().getDistance()));
@@ -191,6 +190,11 @@ public class AnalyticsFragment extends Fragment {
 
         Set<Map.Entry<String, ScrollData>> rawData = data.get(0);
         List<Pair<String, Double>> chartData = new ArrayList<>();
+
+        if (rawData.isEmpty() || rawData.iterator().next().getValue() == null){
+            graphData.add(chartData);
+            return;
+        }
 
         List<String> dates = new ArrayList<>();
         LocalDate tempDate;
@@ -242,6 +246,10 @@ public class AnalyticsFragment extends Fragment {
 
 
         List<AppEntry> tempApps = new ArrayList<>();
+
+        if(data.get(index).isEmpty() || data.get(index).iterator().next().getValue() == null){
+            return;
+        }
 
         for (Map.Entry<String, ScrollData> entry : data.get(index)) {
             for (Map.Entry<String, ScrollEntry> entry1 : entry.getValue().getDataMap().entrySet()) {
