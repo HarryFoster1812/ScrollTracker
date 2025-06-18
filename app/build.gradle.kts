@@ -7,7 +7,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.scrolltracker"
+        applicationId = "com.ScrollTracker.scrolltracker"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -23,6 +23,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

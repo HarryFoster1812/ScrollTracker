@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/gradient_background"
+    android:background="@color/black"
     android:padding="16dp">
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_marginBottom="16dp"
             android:background="#33FFFFFF" />
 
-        <!-- Theme Selection -->
+        <!-- Theme Selection
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/themeSelect"
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Notifications Toggle -->
+         Notifications Toggle
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,6 +118,205 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:strokeWidth="1dp"
+            app:strokeColor="#33FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/baseline_display_settings"
+                        android:contentDescription="Display Icon" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Display"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingTop="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Units"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="12dp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerUnits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/units_array"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginEnd="8dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingTop="12dp">
+
+                    <TextView
+                        android:id="@+id/tvDecimalPlaces"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Decimal places"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="12dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="#33FFFFFF"
+                        app:hintTextColor="#33FFFFFF"
+                        android:layout_marginEnd="8dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editDecimalPlaces"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter dp"
+                            android:inputType="number"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/white"
+                            android:textColorHint="#33FFFFFF"
+                            android:backgroundTint="#33FFFFFF" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+         -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#1E1E1E"
+            app:strokeWidth="1dp"
+            app:strokeColor="#33FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_data_privacy"
+                        android:contentDescription="Data &amp; Privacy Icon" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Data &amp; Privacy"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="12dp" />
+                </LinearLayout>
+
+                <!-- Clear Data -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClearData"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Clear Data"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/white"
+                    app:cornerRadius="8dp"
+                    android:backgroundTint="#D32F2F"
+                    app:icon="@drawable/ic_delete"
+                    app:iconGravity="start"
+                    app:iconPadding="8dp" />
+
+                <!-- Export as CSV
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExportCsv"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Export as CSV"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/white"
+                    app:cornerRadius="8dp"
+                    android:backgroundTint="#1976D2"
+                    app:icon="@drawable/ic_export"
+                    app:iconGravity="start"
+                    app:iconPadding="8dp" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPrivacyPolicy"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Privacy Policy"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/white"
+                    app:cornerRadius="8dp"
+                    android:backgroundTint="#1976D2"
+                    app:icon="@drawable/ic_privacy_policy"
+                    app:iconGravity="start"
+                    app:iconPadding="8dp" />
+                    -->
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Credits and Special Thanks -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/creditsShow"
@@ -156,23 +355,6 @@
                     android:layout_marginStart="12dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- Clear Data -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnClearData"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="Clear All Data"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:cornerRadius="12dp"
-            android:backgroundTint="#D32F2F"
-            android:textColor="@color/white"
-            app:icon="@drawable/ic_delete"
-            app:iconGravity="start"
-            app:iconPadding="8dp" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
