@@ -65,7 +65,7 @@ public class AppEntryAdapter extends RecyclerView.Adapter<AppEntryAdapter.ViewHo
         viewHolder.icon.setImageDrawable(localDataSet.get(position).icon);
         viewHolder.appName.setText(localDataSet.get(position).appName);
         viewHolder.packageName.setText(localDataSet.get(position).packageName);
-        viewHolder.distance.setText(localDataSet.get(position).distance.toString());
+        viewHolder.distance.setText(String.format("%.5f",localDataSet.get(position).distance));
 
     }
 

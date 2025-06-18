@@ -7,7 +7,6 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,14 +18,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollData;
-import com.ScrollTracker.scrolltracker.ScrollService.ScrollDataComparator;
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollEntry;
 import com.ScrollTracker.scrolltracker.ScrollService.ScrollTracker;
 import com.example.scrolltracker.R;
 import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDate;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -296,7 +293,7 @@ public class AnalyticsFragment extends Fragment {
         }
 
         // Add Sorting on the total distance
-
+        Collections.sort(apps, new AppEntryComparator());
         cachedAppEntries.put(index, apps);
         adapter.setData(cachedAppEntries.get(index));
 
