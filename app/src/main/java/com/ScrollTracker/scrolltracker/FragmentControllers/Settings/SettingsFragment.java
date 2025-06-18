@@ -37,6 +37,7 @@ public class SettingsFragment extends Fragment {
         // Get SharedPreferences
         sharedPreferences = requireActivity().getSharedPreferences("AppSettings", getContext().MODE_PRIVATE);
 
+        /*
         // handle theme
         themeView = view.findViewById(R.id.themeSelect);
         themeView.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +54,7 @@ public class SettingsFragment extends Fragment {
             sharedPreferences.edit().putBoolean("notifications", isChecked).apply();
             Toast.makeText(getContext(), "Notifications " + (isChecked ? "Enabled" : "Disabled"), Toast.LENGTH_SHORT).show();
         });
+        */
 
         MaterialCardView credits_card = view.findViewById(R.id.creditsShow);
         credits_card.setOnClickListener(new View.OnClickListener() {
