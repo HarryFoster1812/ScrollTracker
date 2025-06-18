@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@drawable/gradient_background"
+    android:background="@color/black"
     android:padding="16dp">
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_marginBottom="16dp"
             android:background="#33FFFFFF" />
 
-        <!-- Theme Selection -->
+        <!-- Theme Selection
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/themeSelect"
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Notifications Toggle -->
+         Notifications Toggle
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +118,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Display Section -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,7 +157,6 @@
                         android:layout_marginStart="12dp" />
                 </LinearLayout>
 
-                <!-- Units Dropdown -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -185,7 +183,6 @@
                         android:layout_marginEnd="8dp" />
                 </LinearLayout>
 
-                <!-- Show Decimals Toggle -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -229,7 +226,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Data & Privacy Section -->
+         -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -285,7 +282,7 @@
                     app:iconGravity="start"
                     app:iconPadding="8dp" />
 
-                <!-- Export as CSV -->
+                <!-- Export as CSV
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnExportCsv"
                     android:layout_width="match_parent"
@@ -301,7 +298,7 @@
                     app:iconGravity="start"
                     app:iconPadding="8dp" />
 
-                <!-- Privacy Policy -->
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPrivacyPolicy"
                     android:layout_width="match_parent"
@@ -316,6 +313,7 @@
                     app:icon="@drawable/ic_privacy_policy"
                     app:iconGravity="start"
                     app:iconPadding="8dp" />
+                    -->
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
